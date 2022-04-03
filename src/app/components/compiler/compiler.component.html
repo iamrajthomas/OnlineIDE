@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #cfe8fa;">
+    <a class="navbar-brand m-1 p-1" href="#">Online IDE</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<div class="container-fluid row m-1">
+    <div class="container-fluid row ">
+        <form [formGroup]="codeForm" (ngSubmit)="onReactiveFormSubmitCode()" novalidate>
+            <div class="row">
+                <div class="col">
+                    <div class="row form-group col-lg-12 col-md-12 ml-1">
+                        <!-- codeLanguage: {{codeLanguage}} -->
+                        <label for="form-group col-lg-3 col-md-3">Select the Language:</label>
+                        <div class="form-group col-lg-7 col-md-7">
+                            <select id="codeLanguage" name="codeLanguage" class="form-control"  
+                            [(ngModel)] = "codeLanguage" [value]='codeLanguage' formControlName="codeLanguage"
+                                    (change)="onDropDownChangeCodeLanguage($event)"
+                            >
+                                <option [ngValue]="null" disabled>Select the number of players</option>
+                                <option *ngFor="let language of codeLanguageList" [value]="language.id">{{language.displayName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2">
+                            <button type="submit" class="btn btn-md btn-outline-primary" 
+                                data-toggle="tooltip" data-placement="top" title="Run You Code"
+                                [disabled]="!codeForm.valid"
+                            >Run Code</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-12 col-md-12">
+                        <label for="codeInputLabel">You Can Code Here: </label>
+                        <textarea type="text" id="codeInput" aria-describedby="codeInputDesc" required placeholder="Your code goes here..." name="codeInput" 
+                        [(ngModel)] = "codeInput" class="form-control" formControlName="codeInput" rows="10" cols="200"></textarea >
+                    </div>
+
+                    <div class="form-group col-lg-12 col-md-12">
+                        <label for="codeOutputLabel">User Input(s) if any: </label>
+                        <textarea type="text" id="userInput" aria-describedby="userInputDesc" placeholder="User Input(s) here..." name="userInput" 
+                        [(ngModel)] = "userInput" class="form-control" formControlName="userInput" rows="3" cols="200"></textarea >
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group col-lg-12 col-md-12">
+                        <label [hidden]="codeProgress == ''"  for="codeProgressLabel" class="text-danger"><b>{{codeProgress}} </b></label>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12">
+                        <label for="codeOutputLabel">Your Result(s) Will Be Displayed Here: </label>
+                        <textarea type="text" id="codeOutput" aria-describedby="codeOutputDesc" placeholder="Your result(s) will be displayed here..." name="codeOutput" 
+                        [(ngModel)] = "codeOutput" class="form-control" formControlName="codeOutput" rows="10" cols="200"></textarea >
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12">
+                        <label [hidden]="time == '' || time == null" class="text-success" for="timeTakenLabel">Execution Time: <b>{{time}} second(s) </b></label>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12">
+                        <label [hidden]="memory == '' || memory == null" class="text-success" for="memoryUtilizedLabel">Memory Utilized: <b>{{memory}} byte </b></label>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12">
+                        <label [hidden]="statusDescription == '' || statusDescription == null" class="text-success" for="statusDescriptionLabel">Status: <b>{{statusDescription}} </b></label>
+                    </div>
+                    <!-- <div class="form-group col-lg-12 col-md-12">
+                        <label [hidden]="compile_output == '' || compile_output == null" class="text-danger" for="compile_outputLabel">Compile Output: <b>{{compile_output}} </b></label>
+                    </div> -->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
